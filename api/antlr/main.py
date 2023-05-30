@@ -38,7 +38,5 @@ def processInput(input_string: str):
             'column': token.column 
         })
 
-    return {
-        'recognizedTokens': recognizedTokens,
-        'nonRecognizedTokens': errorListener.nonRecognizedTokens
-    }
+    return lexer.ruleNames, recognizedTokens, errorListener.nonRecognizedTokens
+
