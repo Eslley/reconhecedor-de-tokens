@@ -1,5 +1,6 @@
 from antlr4 import *
-from api.antlr.MyGrammarLexer import MyGrammarLexer
+from api.antlr.VagasLexer  import VagasLexer
+from api.antlr.VagasParser  import VagasParser
 
 
 class Error:
@@ -20,7 +21,7 @@ class Error:
 def processInput(input_string: str):
     input_stream = InputStream(input_string)
 
-    lexer = MyGrammarLexer(input_stream)
+    lexer = VagasLexer(input_stream)
 
     errorListener = Error()
 
@@ -32,13 +33,12 @@ def processInput(input_string: str):
     for token in lexer.getAllTokens():
         recognizedTokens.append({
             'text': token.text,
-            'type': lexer.ruleNames[token.type-1], 
+            'type': lexer.ruleNames[token.type - 1], 
             'line': token.line, 
             'column': token.column 
         })
 
     return {
-        'ruleNames': lexer.ruleNames,
         'recognizedTokens': recognizedTokens,
         'nonRecognizedTokens': errorListener.nonRecognizedTokens
     }

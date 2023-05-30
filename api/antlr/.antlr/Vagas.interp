@@ -1,0 +1,914 @@
+token literal names:
+null
+'estágio'
+'estagio'
+'estagiário'
+'estagiario'
+'pj'
+'pessoa jurídica'
+'pessoa juridica'
+'clt'
+'carteira assinada'
+'júnior'
+'junior'
+'pleno'
+'sênior'
+'senior'
+'backend'
+'frontend'
+'fullstack'
+'mobile'
+'Spring boot'
+'Express'
+'Django'
+'Ruby on Rails'
+'ASP.NET'
+'Spring Boot'
+'Flask'
+'Laravel'
+'Play Framework'
+'CakePHP'
+'Symfony'
+'Phoenix'
+'Koa'
+'NestJS'
+'Gin'
+'Rocket'
+'Actix'
+'Vapor'
+'Perfect'
+'Kitura'
+'Echo'
+'Fastify'
+'Feathers'
+'Hapi'
+'AdonisJS'
+'Sails.js'
+'LoopBack'
+'Meteor'
+'Strapi'
+'Sinatra'
+'Hanami'
+'JHipster'
+'Grails'
+'Micronaut'
+'Quarkus'
+'Helidon'
+'Vert.x'
+'Scalatra'
+'Finatra'
+'Ktor'
+'Ratpack'
+'Dropwizard'
+'Jersey'
+'Spark'
+'Tornado'
+'Flask-RESTful'
+'Bottle'
+'Connexion'
+'FastAPI'
+'Slim'
+'Lumen'
+'Phalcon'
+'Zikula'
+'Xataface'
+'Cachet'
+'Mojolicious'
+'Catalyst'
+'Dancer'
+'Plack'
+'Wicket'
+'Tapestry'
+'Seam'
+'VRaptor'
+'JSF'
+'Grain'
+'Agavi'
+'KumbiaPHP'
+'ZK'
+'Agnostic'
+'React'
+'Angular'
+'Vue.js'
+'Ember.js'
+'Backbone.js'
+'Polymer'
+'Aurelia'
+'Svelte'
+'Preact'
+'Stencil'
+'Mithril'
+'Knockout.js'
+'Alpine.js'
+'Nuxt.js'
+'Next.js'
+'Gatsby'
+'Riot.js'
+'Marko'
+'Dojo'
+'Inferno'
+'Quasar'
+'Emotion'
+'Chakra UI'
+'Tailwind CSS'
+'Bootstrap'
+'Foundation'
+'Bulma'
+'Material-UI'
+'Ant Design'
+'Semantic UI'
+'UIKit'
+'Vuetify'
+'PrimeReact'
+'Onsen UI'
+'Ionic'
+'Quill'
+'Draft.js'
+'React Router'
+'Vue Router'
+'React Native'
+'Flutter'
+'NativeScript'
+'Electron'
+'Parcel'
+'Webpack'
+'Rollup'
+'Gulp'
+'Grunt'
+'Babel'
+'TypeScript'
+'ESLint'
+'Prettier'
+'Jest'
+'Mocha'
+'Cypress'
+'Storybook'
+'Enzyme'
+'Redux'
+'Mobx'
+'Vuex'
+'RxJS'
+'GraphQL'
+'Apollo Client'
+'Axios'
+'D3.js'
+'Chart.js'
+'Three.js'
+'GSAP'
+'Lodash'
+'Ramda'
+'Moment.js'
+'Day.js'
+'Numeral.js'
+'Framer Motion'
+'React Query'
+'SWR'
+'Zustand'
+'React Hook Form'
+'Formik'
+'Yup'
+'React Helmet'
+'Styled Components'
+'JSS'
+'Sass'
+'Less'
+'PostCSS'
+'CSS Modules'
+'Styled System'
+'Xamarin'
+'PhoneGap'
+'Cordova'
+'Unity'
+'Adobe AIR'
+'Kotlin Native'
+'Appcelerator Titanium'
+'Framework7'
+'Sencha Touch'
+'jQuery Mobile'
+'Marmalade SDK'
+'Corona SDK'
+'Cocos2d-x'
+'MoSync'
+'Felgo'
+'Qt'
+'ShiVa'
+'Appery.io'
+'Monaca'
+'Fuse'
+'React Native for Web'
+'Natives'
+'Weex'
+'Flutter Web'
+'Xamarin.Forms'
+'Adobe PhoneGap Build'
+'React Native Web'
+'Tabris.js'
+'Smartface'
+'Red Hat Mobile Application Platform'
+'Alpha Anywhere'
+'Xamarin.Android'
+'Xamarin.iOS'
+'Appcelerator'
+'ReactXP'
+'V-Play'
+'Gideros Mobile'
+'GameMaker Studio'
+'GoNative.io'
+'CoronaCards'
+'Haxe'
+'Defold'
+'jQWidgets'
+'DHTMLX Touch'
+'Noodl'
+'Fuseboxx'
+'GeneXus'
+'Kony'
+'SAP Fiori'
+'IBM MobileFirst Platform'
+'Kinvey'
+'Mendix'
+'OutSystems'
+'Xcode'
+'Android Studio'
+'Comunicação Efetiva'
+'Trabalho em Equipe'
+'Resolução de Problemas'
+'Adaptabilidade'
+'Pensamento Crítico'
+'Autodisciplina'
+'Aprendizagem Contínua'
+'Criatividade'
+'Liderança'
+'Resiliência'
+'Flexibilidade'
+'Colaboração'
+'Habilidades de Negociação'
+'Gerenciamento de Tempo'
+'Organização'
+'Empatia'
+'Pensamento Analítico'
+'Iniciativa'
+'Curiosidade'
+'Gestão de Conflitos'
+'Tomada de Decisão'
+'Foco no Cliente'
+'Mentalidade �?gil'
+'Senso de Responsabilidade'
+'Capacidade de Lidar com a Pressão'
+'Habilidades Interpessoais'
+'Respeito à Diversidade'
+'Habilidade de Lidar com Feedback'
+'Assertividade'
+'Habilidades de Apresentação'
+'Liderança Servidora'
+'Pensamento Sistêmico'
+'Negociação'
+'Capacidade de Lidar com Mudanças'
+'Orientação a Resultados'
+'Visão Estratégica'
+'Habilidades de Facilitação'
+'Mentoria'
+'Ética Profissional'
+'Compreensão de Negócios'
+'Gestão de Projetos'
+'Resolução de Conflitos'
+'Comunicação Interpessoal'
+'Habilidades de Influência'
+'Inteligência Emocional'
+'Orientação para Detalhes'
+'Visão de Produto'
+'Gerenciamento de Expectativas'
+'Habilidades de Coaching'
+'Pensamento Criativo'
+'Capacidade de Trabalhar sob Pressão'
+'Habilidades de Facilitação de Reuniões'
+'Colaboração Multidisciplinar'
+'Orientação para o Cliente'
+'Capacidade de Adaptação'
+'Resolução de Problemas Complexos'
+'Gerenciamento de Conflitos'
+'Habilidades de Gestão de Equipes'
+'Proatividade'
+'Comunica de forma efetiva'
+'Trabalha em equipe'
+'Resolve problemas'
+'Adapta-se facilmente'
+'Pensa criticamente'
+'Demonstra autodisciplina'
+'Busca aprendizado contínuo'
+'Apresenta criatividade'
+'Lidera'
+'Demonstra resiliência'
+'Mostra flexibilidade'
+'Colabora'
+'Possui habilidades de negociação'
+'Gerencia o tempo'
+'Organiza-se'
+'Demonstra empatia'
+'Analisa de forma crítica'
+'Demonstra iniciativa'
+'Demonstra curiosidade'
+'Gerencia conflitos'
+'Toma decisões'
+'Foca no cliente'
+'Possui mentalidade ágil'
+'Assume responsabilidade'
+'Lida bem com pressão'
+'Demonstra habilidades interpessoais'
+'Respeita a diversidade'
+'Lida bem com feedback'
+'É assertivo'
+'Apresenta bem'
+'Demonstra liderança servidora'
+'Possui pensamento sistêmico'
+'Negocia'
+'Adapta-se a mudanças'
+'Orienta-se a resultados'
+'Possui visão estratégica'
+'Facilita'
+'Demonstra ética profissional'
+'Compreende negócios'
+'Gerencia projetos'
+'Resolve conflitos'
+'Interage bem'
+'Influencia habilmente'
+'Possui inteligência emocional'
+'Observa detalhes'
+'Tem visão de produto'
+'Gerencia expectativas'
+'Coaching'
+'Pensa criativamente'
+'Facilita reuniões'
+'Colabora multidisciplinarmente'
+'Orienta-se ao cliente'
+'Resolve problemas complexos'
+'Gerencia equipes'
+'Demonstra proatividade'
+'Python'
+'Java'
+'C#'
+'Ruby'
+'PHP'
+'Go'
+'Rust'
+'JavaScript'
+'Scala'
+'Kotlin'
+'Swift'
+'Perl'
+'Groovy'
+'Haskell'
+'Lua'
+'Erlang'
+'Clojure'
+'Objective-C'
+'F#'
+'Dart'
+'Julia'
+'Elixir'
+'Scheme'
+'OCaml'
+'VB.NET'
+'PowerShell'
+'Shell Script'
+'Racket'
+'Fortran'
+'COBOL'
+'Pascal'
+'Lisp'
+'Ada'
+'Prolog'
+'Matlab'
+'Smalltalk'
+'Delphi'
+'ActionScript'
+'CoffeeScript'
+'LabVIEW'
+'Fora'
+'XPath'
+'XSLT'
+'HTML'
+'HTML5'
+'CSS'
+'jQuery'
+'Stylus'
+'WebAssembly'
+'Handlebars'
+'Mustache'
+'Pug'
+'Jade'
+'Elm'
+'ReasonML'
+'ClojureScript'
+'PureScript'
+'Glimmer.js'
+'Dojo Toolkit'
+'Browserify'
+'SQL'
+'MySQL'
+'PostgreSQL'
+'Oracle Database'
+'Microsoft SQL Server'
+'MongoDB'
+'Redis'
+'Cassandra'
+'SQLite'
+'MariaDB'
+'Amazon Aurora'
+'Google BigQuery'
+'IBM Db2'
+'Apache Hadoop'
+'Apache Hive'
+'Apache Cassandra'
+'Apache Kafka'
+'Apache Spark'
+'Neo4j'
+'Couchbase'
+'DynamoDB'
+'Firebase Realtime Database'
+'Realm'
+'CockroachDB'
+'ArangoDB'
+'RethinkDB'
+'InfluxDB'
+'Elasticsearch'
+'Amazon Redshift'
+'Teradata'
+'Sybase'
+'Informix'
+'Vertica'
+'RavenDB'
+'HBase'
+'Memcached'
+'VoltDB'
+'Snowflake'
+'Apache Derby'
+'Apache Lucene'
+'Cosmos DB'
+'Apache Solr'
+null
+
+token symbolic names:
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+Space
+
+rule names:
+ini
+tipo_de_vaga
+senioridade
+area
+subareas_backend
+subareas_frontend
+subareas_mobile
+softskills
+linguagens
+
+
+atn:
+[3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 449, 50, 4, 2, 9, 2, 4, 3, 9, 3, 4, 4, 9, 4, 4, 5, 9, 5, 4, 6, 9, 6, 4, 7, 9, 7, 4, 8, 9, 8, 4, 9, 9, 9, 4, 10, 9, 10, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 2, 7, 2, 29, 10, 2, 12, 2, 14, 2, 32, 11, 2, 3, 3, 3, 3, 3, 4, 3, 4, 3, 5, 3, 5, 3, 6, 3, 6, 3, 7, 3, 7, 3, 8, 3, 8, 3, 9, 3, 9, 3, 10, 3, 10, 3, 10, 2, 2, 11, 2, 4, 6, 8, 10, 12, 14, 16, 18, 2, 10, 3, 2, 3, 11, 3, 2, 12, 16, 3, 2, 17, 20, 3, 2, 21, 89, 4, 2, 48, 48, 90, 177, 5, 2, 123, 124, 129, 131, 178, 232, 3, 2, 233, 346, 10, 2, 90, 97, 99, 105, 107, 107, 113, 114, 133, 139, 154, 154, 173, 175, 347, 448, 2, 48, 2, 30, 3, 2, 2, 2, 4, 33, 3, 2, 2, 2, 6, 35, 3, 2, 2, 2, 8, 37, 3, 2, 2, 2, 10, 39, 3, 2, 2, 2, 12, 41, 3, 2, 2, 2, 14, 43, 3, 2, 2, 2, 16, 45, 3, 2, 2, 2, 18, 47, 3, 2, 2, 2, 20, 29, 5, 4, 3, 2, 21, 29, 5, 6, 4, 2, 22, 29, 5, 8, 5, 2, 23, 29, 5, 10, 6, 2, 24, 29, 5, 12, 7, 2, 25, 29, 5, 14, 8, 2, 26, 29, 5, 16, 9, 2, 27, 29, 5, 18, 10, 2, 28, 20, 3, 2, 2, 2, 28, 21, 3, 2, 2, 2, 28, 22, 3, 2, 2, 2, 28, 23, 3, 2, 2, 2, 28, 24, 3, 2, 2, 2, 28, 25, 3, 2, 2, 2, 28, 26, 3, 2, 2, 2, 28, 27, 3, 2, 2, 2, 29, 32, 3, 2, 2, 2, 30, 28, 3, 2, 2, 2, 30, 31, 3, 2, 2, 2, 31, 3, 3, 2, 2, 2, 32, 30, 3, 2, 2, 2, 33, 34, 9, 2, 2, 2, 34, 5, 3, 2, 2, 2, 35, 36, 9, 3, 2, 2, 36, 7, 3, 2, 2, 2, 37, 38, 9, 4, 2, 2, 38, 9, 3, 2, 2, 2, 39, 40, 9, 5, 2, 2, 40, 11, 3, 2, 2, 2, 41, 42, 9, 6, 2, 2, 42, 13, 3, 2, 2, 2, 43, 44, 9, 7, 2, 2, 44, 15, 3, 2, 2, 2, 45, 46, 9, 8, 2, 2, 46, 17, 3, 2, 2, 2, 47, 48, 9, 9, 2, 2, 48, 19, 3, 2, 2, 2, 4, 28, 30]
