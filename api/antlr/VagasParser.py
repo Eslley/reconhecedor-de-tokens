@@ -11,7 +11,7 @@ else:
 def serializedATN():
     return [
         4,1,16,9,2,0,7,0,1,0,5,0,4,8,0,10,0,12,0,7,9,0,1,0,0,0,1,0,0,1,1,
-        0,1,15,8,0,5,1,0,0,0,2,4,7,0,0,0,3,2,1,0,0,0,4,7,1,0,0,0,5,3,1,0,
+        0,1,16,8,0,5,1,0,0,0,2,4,7,0,0,0,3,2,1,0,0,0,4,7,1,0,0,0,5,3,1,0,
         0,0,5,6,1,0,0,0,6,1,1,0,0,0,7,5,1,0,0,0,1,5
     ]
 
@@ -161,6 +161,12 @@ class VagasParser ( Parser ):
             else:
                 return self.getToken(VagasParser.ESPECIAIS, i)
 
+        def NUMEROS(self, i:int=None):
+            if i is None:
+                return self.getTokens(VagasParser.NUMEROS)
+            else:
+                return self.getToken(VagasParser.NUMEROS, i)
+
         def getRuleIndex(self):
             return VagasParser.RULE_ini
 
@@ -177,10 +183,10 @@ class VagasParser ( Parser ):
             self.state = 5
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 65534) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 131070) != 0):
                 self.state = 2
                 _la = self._input.LA(1)
-                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 65534) != 0)):
+                if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 131070) != 0)):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
