@@ -1,7 +1,7 @@
 from antlr4 import *
 from api.antlr.VagasLexer  import VagasLexer
 from api.antlr.VagasParser  import VagasParser
-
+from unidecode import unidecode
 
 class Error:
 
@@ -19,7 +19,7 @@ class Error:
 
 
 def processInput(input_string: str):
-    input_stream = InputStream(input_string)
+    input_stream = InputStream(unidecode(input_string))
 
     lexer = VagasLexer(input_stream)
 
