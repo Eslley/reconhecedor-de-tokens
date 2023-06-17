@@ -4,6 +4,8 @@ Reconhecedor de tokens em vagas de estágio/empregos na área de tecnologia
 
 URL Base: https://projeto-compiladores.vercel.app
 
+* **POST /parser**
+
 * **POST /analisador**
 
     Request:

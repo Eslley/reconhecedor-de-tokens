@@ -2,5 +2,6 @@ from django.urls import path
 from api.views import *
 
 urlpatterns = [
-    path('', analisys, name='process-input'),
+    path('analisador', analisys, name='process-input'),
+    path('parser', parser, name='process-parser'),
 ]
