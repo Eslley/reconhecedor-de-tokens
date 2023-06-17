@@ -14,7 +14,7 @@ class SQLParser:
     def next_token(self):
         self.current_token += 1
         if self.current_token > len(self.tokens):
-            self.print_error_fim()
+            self.error_end_input()
         self.token = self.tokens[self.current_token-1]['token']
         self.current_token_line = self.tokens[self.current_token-1]['line']
 
@@ -25,7 +25,7 @@ class SQLParser:
             if self.token == ";":
                 continue
             else:
-                self.print_error(";")
+                self.error_not_expected_token(";")
 
     def cmd(self):
         self.create()
@@ -53,9 +53,9 @@ class SQLParser:
                     if self.token == ")":
                         self.next_token()
                     else:
-                        self.print_error(")")
+                        self.error_not_expected_token(")")
                 else:
-                    self.print_error("(")
+                    self.error_not_expected_token("(")
                 if self.token == "values":
                     self.next_token()
                     if self.token == '(':
@@ -64,13 +64,13 @@ class SQLParser:
                         if self.token == ")":
                             self.next_token()
                         else:
-                            self.print_error(")")
+                            self.error_not_expected_token(")")
                     else:
-                        self.print_error("(")
+                        self.error_not_expected_token("(")
                 else:
-                    self.print_error("values")
+                    self.error_not_expected_token("values")
             else:
-                self.print_error("into")
+                self.error_not_expected_token("into")
 
     def select(self):
         if self.token == "select":
@@ -88,7 +88,7 @@ class SQLParser:
                 self.next_token()
                 self.id()
             else:
-                self.print_error('table')
+                self.error_not_expected_token('table')
 
     def delete(self):
         if self.token == 'delete':
@@ -98,7 +98,7 @@ class SQLParser:
                 self.id()
                 self.where()
             else:
-                self.print_error('from')
+                self.error_not_expected_token('from')
 
     def update(self):
         if self.token == 'update':
@@ -112,9 +112,9 @@ class SQLParser:
                     self.value()
                     self.where()
                 else:
-                    self.print_error('=')
+                    self.error_not_expected_token('=')
             else:
-                self.print_error('set')
+                self.error_not_expected_token('set')
 
     def cmd1(self):
         if self.token == "database":
@@ -130,9 +130,9 @@ class SQLParser:
                     self.next_token()
                     return
                 else:
-                    self.print_error(')')
+                    self.error_not_expected_token(')')
             else:
-                self.print_error('(')
+                self.error_not_expected_token('(')
 
     def cmd2(self):
         if self.token == '*':
@@ -147,7 +147,7 @@ class SQLParser:
                 self.next_token()
                 self.id()
             else:
-                self.print_error("by")
+                self.error_not_expected_token("by")
         else:
             self.where()
 
@@ -159,9 +159,9 @@ class SQLParser:
                 self.next_token()
                 self.value()
             else:
-                self.print_error('=')
+                self.error_not_expected_token('=')
         else:
-            self.print_error('where')
+            self.error_not_expected_token('where')
 
     def ids(self):
         self.id()
@@ -180,18 +180,18 @@ class SQLParser:
             if self.token not in self.reserved_words:
                 self.next_token()
             else:
-                self.print_error("<id>")
+                self.error_reserved_word()
         else:
-            self.print_error("<id>")
+            self.error_not_expected_token("<id>")
 
     def value(self):
         if re.match(r'[a-z]+|[0-9]+', self.token):
             if self.token not in self.reserved_words:
                 self.next_token()
             else:
-                self.print_error("<value>")
+                self.error_reserved_word()
         else:
-            self.print_error("<value>")
+            self.error_not_expected_token("<value>")
 
     def fields(self):
         self.field()
@@ -208,14 +208,21 @@ class SQLParser:
             self.next_token()
             self.id()
 
-    def print_error_fim(self):
+    def error_reserved_word(self):
+         raise ValueError({
+            'errorType': 'reserved_word',
+            'line': self.current_token_line,
+            'received': self.token
+        })
+
+    def error_end_input(self):
          raise ValueError({
             'errorType': 'end_input_not_expected',
             'line': self.current_token_line,
             'received': self.token
         })
 
-    def print_error(self, esperado):
+    def error_not_expected_token(self, esperado):
         raise ValueError({
             'errorType': 'token_not_expected',
             'line': self.current_token_line,
