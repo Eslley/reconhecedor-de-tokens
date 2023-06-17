@@ -5,8 +5,8 @@ class SQLParser:
     current_token = 0
     current_token_line = 1
     token = ''
-    reserved_words = ['create', 'table', 'database', ' use', 'insert', 'into', 'values', 'select', 'from', 'order', 'by',
-                      'where', 'truncate', 'update', 'set', 'delete']
+    reserved_words = ['create', 'table', 'database', ' use', 'insert', 'into', 'values', 'select', 'from', 'order',
+                      'by', 'where', 'truncate', 'update', 'set', 'delete']
 
     def __init__(self, tokens):
         self.tokens = tokens
@@ -31,9 +31,10 @@ class SQLParser:
         self.create()
         self.use()
         self.insert()
-        #select()
-        #delete()
-        #truncate()
+        self.select()
+        self.update()
+        self.delete()
+        self.truncate()
 
     def create(self):
         if "create" == self.token:
@@ -71,6 +72,50 @@ class SQLParser:
             else:
                 self.print_error("into")
 
+    def select(self):
+        if self.token == "select":
+            self.next_token()
+            self.cmd2()
+            if self.token == 'from':
+                self.next_token()
+                self.id()
+                self.cmd3()
+
+    def truncate(self):
+        if self.token == 'truncate':
+            self.next_token()
+            if self.token == 'table':
+                self.next_token()
+                self.id()
+            else:
+                self.print_error('table')
+
+    def delete(self):
+        if self.token == 'delete':
+            self.next_token()
+            if self.token == 'from':
+                self.next_token()
+                self.id()
+                self.where()
+            else:
+                self.print_error('from')
+
+    def update(self):
+        if self.token == 'update':
+            self.next_token()
+            self.id()
+            if self.token == 'set':
+                self.next_token()
+                self.id()
+                if self.token == '=':
+                    self.next_token()
+                    self.value()
+                    self.where()
+                else:
+                    self.print_error('=')
+            else:
+                self.print_error('set')
+
     def cmd1(self):
         if self.token == "database":
             self.next_token()
@@ -88,6 +133,35 @@ class SQLParser:
                     self.print_error(')')
             else:
                 self.print_error('(')
+
+    def cmd2(self):
+        if self.token == '*':
+            self.next_token()
+        else:
+            self.ids()
+
+    def cmd3(self):
+        if self.token == 'order':
+            self.next_token()
+            if self.token == 'by':
+                self.next_token()
+                self.id()
+            else:
+                self.print_error("by")
+        else:
+            self.where()
+
+    def where(self):
+        if self.token == 'where':
+            self.next_token()
+            self.id()
+            if self.token == '=':
+                self.next_token()
+                self.value()
+            else:
+                self.print_error('=')
+        else:
+            self.print_error('where')
 
     def ids(self):
         self.id()
