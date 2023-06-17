@@ -25,6 +25,7 @@ URL Base: https://projeto-compiladores.vercel.app
     O campo `errorType` pode ter os valores:
     -   token_not_expected
     -   end_input_not_expected
+    -   reserved_word
 
     ```
         {
