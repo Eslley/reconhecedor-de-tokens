@@ -6,6 +6,52 @@ URL Base: https://projeto-compiladores.vercel.app
 
 * **POST /parser**
 
+    Request:
+    ```
+        {
+            "input":  "create table pres (nome varchar, pena int);\ncreate table pres1 (nome1 varchar, pena1 int);"
+        }
+    ```
+
+    Response de successo:
+    ```
+        {
+            "success": true
+        }
+    ```
+
+    Response de erro:
+
+    O campo `errorType` pode ter os valores:
+    -   token_not_expected
+    -   end_input_not_expected
+
+    ```
+        {
+            "success": false,
+            "errorInfo": [
+                {
+                    "errorType": "token_not_expected",
+                    "line": 1,
+                    "expected": "(",
+                    "received": "nome"
+                }
+            ]
+        }
+    ```
+    ```
+        {
+            "success": false,
+            "errorInfo": [
+                {
+                    "errorType": "end_input_not_expected",
+                    "line": 2,
+                    "received": ")"
+                }
+            ]
+        }
+    ```
+
 * **POST /analisador**
 
     Request:
