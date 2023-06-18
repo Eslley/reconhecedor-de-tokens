@@ -201,7 +201,7 @@ class SQLParser:
             self.error_not_expected_token("<id>")
 
     def value(self):
-        if re.match(r'[a-z]+|[0-9]+', self.token) or re.match(r'\'[a-z]+|[0-9]\'+', self.token):
+        if re.fullmatch(r'[0-9]+', self.token) or re.fullmatch(r'\'[a-z]*|[0-9]*\'+', self.token):
             if self.token not in self.reserved_words:
                 self.next_token()
             else:
