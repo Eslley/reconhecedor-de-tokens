@@ -22,10 +22,10 @@ class SQLParser:
         while self.current_token < len(self.tokens):
             self.next_token()
             self.cmd()
-            if self.token == ";":
-                continue
-            else:
-                self.error_not_expected_token(";")
+    
+    def verify_semicolon(self):
+        if self.token != ";":
+            self.error_not_expected_token(";")
 
     def cmd(self):
         self.create()
@@ -40,6 +40,8 @@ class SQLParser:
         if "create" == self.token:
             self.next_token()
             self.cmd1()
+
+            self.verify_semicolon()
 
     def insert(self):
         if "insert" == self.token:
@@ -71,6 +73,8 @@ class SQLParser:
                     self.error_not_expected_token("values")
             else:
                 self.error_not_expected_token("into")
+            
+            self.verify_semicolon()
 
     def select(self):
         if self.token == "select":
@@ -80,6 +84,8 @@ class SQLParser:
                 self.next_token()
                 self.id()
                 self.cmd3()
+        
+            self.verify_semicolon()
 
     def truncate(self):
         if self.token == 'truncate':
@@ -89,6 +95,8 @@ class SQLParser:
                 self.id()
             else:
                 self.error_not_expected_token('table')
+        
+            self.verify_semicolon()
 
     def delete(self):
         if self.token == 'delete':
@@ -99,6 +107,8 @@ class SQLParser:
                 self.where()
             else:
                 self.error_not_expected_token('from')
+        
+            self.verify_semicolon()
 
     def update(self):
         if self.token == 'update':
@@ -115,6 +125,8 @@ class SQLParser:
                     self.error_not_expected_token('=')
             else:
                 self.error_not_expected_token('set')
+        
+            self.verify_semicolon()
 
     def cmd1(self):
         if self.token == "database":
@@ -205,6 +217,8 @@ class SQLParser:
         if self.token == 'use':
             self.next_token()
             self.id()
+        
+            self.verify_semicolon()
 
     def error_reserved_word(self):
          raise ValueError({
