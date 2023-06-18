@@ -7,6 +7,7 @@ class SQLParser:
     token = ''
     reserved_words = ['create', 'table', 'database', ' use', 'insert', 'into', 'values', 'select', 'from', 'order',
                       'by', 'where', 'truncate', 'update', 'set', 'delete']
+    found_valid_token = False
 
     def __init__(self, tokens):
         self.tokens = tokens
@@ -28,6 +29,8 @@ class SQLParser:
             self.error_not_expected_token(";")
 
     def cmd(self):
+        last_token_index = self.current_token
+
         self.create()
         self.use()
         self.insert()
@@ -35,6 +38,9 @@ class SQLParser:
         self.update()
         self.delete()
         self.truncate()
+
+        if last_token_index == self.current_token:
+            self.error_token_invalid()
 
     def create(self):
         if "create" == self.token:
@@ -239,5 +245,12 @@ class SQLParser:
             'errorType': 'token_not_expected',
             'line': self.current_token_line,
             'expected': esperado,
+            'received': self.token
+        })
+    
+    def error_token_invalid(self):
+        raise ValueError({
+            'errorType': 'token_invalid',
+            'line': self.current_token_line,
             'received': self.token
         })
