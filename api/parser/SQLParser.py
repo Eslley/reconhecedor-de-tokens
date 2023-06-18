@@ -160,14 +160,12 @@ class SQLParser:
                 self.value()
             else:
                 self.error_not_expected_token('=')
-        else:
-            self.error_not_expected_token('where')
 
     def ids(self):
         self.id()
         if self.token == ',':
             self.next_token()
-            self.id()
+            self.ids()
 
     def values(self):
         self.value()
@@ -185,7 +183,7 @@ class SQLParser:
             self.error_not_expected_token("<id>")
 
     def value(self):
-        if re.match(r'[a-z]+|[0-9]+', self.token):
+        if re.match(r'[a-z]+|[0-9]+', self.token) or re.match(r'\'[a-z]+|[0-9]\'+', self.token):
             if self.token not in self.reserved_words:
                 self.next_token()
             else:
