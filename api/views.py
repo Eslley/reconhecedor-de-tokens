@@ -34,7 +34,7 @@ def parser(request):
     if serializer.is_valid():
         data = serializer.validated_data
         input = data['input']
-        input = input.lower()
+        input = input.lower().rstrip()
 
         tokens = []
 
