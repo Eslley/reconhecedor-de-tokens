@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 
 from api.antlr.main import *
 from api.parser.SQLParser import SQLParser
+from api.compiler.main import compile
 from api.serializers import InputSerializer
 
 import re
@@ -66,3 +67,12 @@ def parser(request):
         return Response(response , status=status.HTTP_200_OK)
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+@api_view(['POST'])
+def compile_program(request):
+    code = request.data['input']
+    
+    content = compile(code)
+
+    return Response(content, headers={'Content-Disposition': 'attachment; filename="Program.class"'}, status=status.HTTP_200_OK)
