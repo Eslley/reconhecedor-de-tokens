@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
+from django.http import FileResponse
 
 from api.antlr.main import *
 from api.parser.SQLParser import SQLParser
@@ -74,8 +75,13 @@ def compile_program(request):
     code = request.data['input']
     
     content = compile(code)
+    print(content)
 
     if 'error' in content:
         return Response(content, status=status.HTTP_400_BAD_REQUEST)
+    
+    response = FileResponse(content, content_type='application/octet-stream')
+    response['Content-Disposition'] = 'attachment; filename="Program.class"'
+    return response
 
-    return Response(content, headers={'Content-Disposition': 'attachment; filename="Program.class"'}, status=status.HTTP_200_OK)
+    # return Response(content, headers={'Content-Disposition': 'attachment; filename="Program.class"'}, status=status.HTTP_200_OK)
