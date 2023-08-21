@@ -38,7 +38,4 @@ def compile(stream):
 
 def generate_class_program():
     os.system('java -jar jasmin.jar Program.j')
-    
-    with open('Program.class', 'r') as f:
-        javaProgram = f.read()
-        return javaProgram
+    return True
