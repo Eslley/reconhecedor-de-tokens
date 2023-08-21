@@ -75,4 +75,7 @@ def compile_program(request):
     
     content = compile(code)
 
+    if 'error' in content:
+        return Response(content, status=status.HTTP_400_BAD_REQUEST)
+
     return Response(content, headers={'Content-Disposition': 'attachment; filename="Program.class"'}, status=status.HTTP_200_OK)
