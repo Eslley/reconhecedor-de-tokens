@@ -122,7 +122,13 @@ class LanguageListener(ParseTreeListener):
 
     # Exit a parse tree produced by LanguageParser#conditions.
     def exitConditions(self, ctx:LanguageParser.ConditionsContext):
-        pass
+        if ctx.ID() is not None :
+            var = self.getFromSymbolTable[ctx.ID().getText()]
+            self.jasminParser.loadVar(var[0],var[1])
+            self.jasminParser.callCondition("",ctx.inherit,"bool")
+        elif ctx.BOOL() is not None:
+            self.jasminParser.loadConst(ctx.BOOL().getText(),"bool")
+            self.jasminParser.callCondition("", ctx.inherit, "bool")
 
 
     # Enter a parse tree produced by LanguageParser#ifelse.
@@ -169,7 +175,10 @@ class LanguageListener(ParseTreeListener):
 
     # Exit a parse tree produced by LanguageParser#break.
     def exitBreak(self, ctx:LanguageParser.BreakContext):
-        self.jasminParser.goto("while","end")
+        try:
+            self.jasminParser.goto("while","end")
+        except:
+            raise Exception(f'line {ctx.start.line}: Comando break fora de while!')
 
     # Enter a parse tree produced by LanguageParser#nativeFunctions.
     def enterNativeFunctions(self, ctx:LanguageParser.NativeFunctionsContext):
@@ -188,10 +197,14 @@ class LanguageListener(ParseTreeListener):
     def exitPrint(self, ctx:LanguageParser.PrintContext):
         for param in ctx.printParams():
             if param.ID() is not None:
-                id = self.symbolTable[param.ID().getText()]
-                self.jasminParser.createPrint(id[0],id[1])
-            else:
-                self.jasminParser.createPrintValue()
+                id = self.getFromSymbolTable(param.ID().getText())
+                if id[0] is not None: # variáveis
+                    self.jasminParser.createPrint(id[0],id[1])
+                else: # constantes
+                    self.jasminParser.loadConst(id[2], id[1])
+                    self.jasminParser.createPrintValue(id[1])
+            elif param.allExp() is not None:
+                self.jasminParser.createPrintValue(param.allExp().type)
 
 
     # Enter a parse tree produced by LanguageParser#printParams.
@@ -210,11 +223,13 @@ class LanguageListener(ParseTreeListener):
     # Exit a parse tree produced by LanguageParser#scanf.
     def exitScanf(self, ctx:LanguageParser.ScanfContext):
         for test in ctx.id_():
-            var = self.symbolTable[test.ID().getText()]
+            var = self.getFromSymbolTable(test.ID().getText())
+
+            if var[0] is None:
+                raise Exception(f'line {ctx.start.line}: Erro de atribuição! identificador {test.ID().getText()} é uma constante')
+                
             self.jasminParser.callScanner(var[1])
             self.jasminParser.storage(var[0],var[1])
-
-
 
     # Enter a parse tree produced by LanguageParser#varDeclaration.
     def enterVarDeclaration(self, ctx:LanguageParser.VarDeclarationContext):
@@ -269,14 +284,24 @@ class LanguageListener(ParseTreeListener):
     def exitConstVar(self, ctx:LanguageParser.ConstVarContext):
         pass
 
-
     # Enter a parse tree produced by LanguageParser#value.
     def enterValue(self, ctx:LanguageParser.ValueContext):
         pass
 
     # Exit a parse tree produced by LanguageParser#value.
     def exitValue(self, ctx:LanguageParser.ValueContext):
-        pass
+        id = ctx.ID().getText()
+        value = ctx.primitiveType()
+        ctx.isConst = True
+
+        if value.INT() is not None:
+            self.symbolTable[id] = [None, 'int', int(value.INT().getText())]
+        elif value.FLOAT() is not None:
+            self.symbolTable[id] = [None, 'float', float(value.FLOAT().getText())]
+        elif value.STRING() is not None:
+            self.symbolTable[id] = [None, 'str', value.STRING().getText().replace('"', '')]
+        elif value.BOOL() is not None:
+            self.symbolTable[id] = [None, 'bool', value.BOOL().getText()]
 
 
     # Enter a parse tree produced by LanguageParser#type.
@@ -287,52 +312,57 @@ class LanguageListener(ParseTreeListener):
     def exitType(self, ctx:LanguageParser.TypeContext):
         pass
 
-
     # Enter a parse tree produced by LanguageParser#primitiveType.
     def enterPrimitiveType(self, ctx:LanguageParser.PrimitiveTypeContext):
         pass
 
     # Exit a parse tree produced by LanguageParser#primitiveType.
     def exitPrimitiveType(self, ctx:LanguageParser.PrimitiveTypeContext):
+        value = None
         if ctx.FLOAT() is not None:
-            self.jasminParser.loadConst(ctx.FLOAT().getText(), "float")
+            value = ctx.FLOAT().getText()
             ctx.type = "float"
-
         elif ctx.INT() is not None:
-            self.jasminParser.loadConst(ctx.INT().getText(), "int")
+            value = ctx.INT().getText()
             ctx.type = "int"
         elif ctx.STRING() is not None:
-            self.jasminParser.loadConst(ctx.STRING().getText(), "str")
+            value = ctx.STRING().getText()
             ctx.type = "str"
         elif ctx.BOOL() is not None:
-            self.jasminParser.loadConst(ctx.BOOL().getText(), "bool")
+            value = ctx.BOOL().getText()
             ctx.type = "bool"
 
-    # Enter a parse tree produced by LanguageParser#expression.
+        if not hasattr(ctx.parentCtx, 'isConst'): # só carrega se não for declaração de constante
+            self.jasminParser.loadConst(value, ctx.type)
+                                        
+    # Enter a parse tree produced by LanguageParserion.
     def enterExpression(self, ctx:LanguageParser.ExpressionContext):
         child = ctx.getChild(2)
         child.inherit = 'attr'
 
     # Exit a parse tree produced by LanguageParser#expression.
     def exitExpression(self, ctx:LanguageParser.ExpressionContext):
-        if ctx.ID().getText() not in self.symbolTable:
-            raise Exception("variavel não declarada anteriormente")
+        var = self.getFromSymbolTable(ctx.ID().getText())
+
+        if var[0] is None:
+            raise Exception(f'line {ctx.start.line}: Erro de atribuição! {ctx.ID().getText()} é uma constante')
         else:
             ctx.type = ctx.getChild(2).type
-            var = self.symbolTable[ctx.ID().getText()]
             if ctx.type == "int" and var[1] == "float":
                 self.jasminParser.intToFloat(2)
             elif ctx.type == "float" and var[1] == "int":
                 self.jasminParser.floatToInt(2)
             elif ctx.type != var[1]:
-                raise Exception(f'Erro de atribuição! na variável {ctx.ID().getText()} era esperado {var[1]} mas foi recebido {ctx.type}')
+                raise Exception(f'line {ctx.start.line}: Erro de atribuição! na variável {ctx.ID().getText()} era esperado {var[1]} mas foi recebido {ctx.type}')
 
             self.jasminParser.storage(var[0],var[1])
 
 
     # Enter a parse tree produced by LanguageParser#allExp.
     def enterAllExp(self, ctx:LanguageParser.AllExpContext):
-        pass
+        child = ctx.getChild(0)
+        if hasattr(ctx,"inherit"):
+            child.inherit = ctx.inherit
 
     # Exit a parse tree produced by LanguageParser#allExp.
     def exitAllExp(self, ctx:LanguageParser.AllExpContext):
@@ -356,9 +386,9 @@ class LanguageListener(ParseTreeListener):
             operand1 = ctx.aritmeticExp()[0]
             operand2 = ctx.aritmeticExp()[1]
             if operand1.type not in ["float","int"]:
-                raise Exception(f'Operação \"{operation}\" inválida para tipo {operand1.type}')
+                raise Exception(f'line {ctx.start.line}: Operação \"{operation}\" inválida para tipo {operand1.type}')
             elif operand2.type not in ["float","int"]:
-                raise Exception(f'Operação \"{operation}\" inválida para tipo {operand2.type}')
+                raise Exception(f'line {ctx.start.line}: Operação \"{operation}\" inválida para tipo {operand2.type}')
 
             if operand1.type == operand2.type:
                 ctx.type = operand2.type
@@ -389,15 +419,17 @@ class LanguageListener(ParseTreeListener):
     def exitLogicExp(self, ctx:LanguageParser.LogicExpContext):
         typeIf = ""
         if ctx.logicExp() is not None and len(ctx.logicExp())==1:
-            ctx.type = "ifunario"
+            ctx.type = "bool"
+        elif ctx.notExp() is not None:
+            ctx.type='bool'
         else:
             operand1 = ctx.elemLogic()[0]
             operand2 = ctx.elemLogic()[1]
 
             if operand1.type not in ["float","int"]:
-                raise Exception(f'Operação {ctx.logicOp().getText()} inválida para tipo {operand1.type}')
+                raise Exception(f'line {ctx.start.line}: Operação {ctx.logicOp().getText()} inválida para tipo {operand1.type}')
             elif operand2.type not in ["float","int"]:
-                raise Exception(f'Operação {ctx.logicOp().getText()} inválida para tipo {operand1.type}')
+                raise Exception(f'line {ctx.start.line}: Operação {ctx.logicOp().getText()} inválida para tipo {operand2.type}')
 
 
             if operand1.type == operand2.type:
@@ -408,9 +440,12 @@ class LanguageListener(ParseTreeListener):
                 else:
                     self.jasminParser.intToFloat(1)
                 typeIf = "float"
-            if ctx.inherit is not "attr":
+            if hasattr(ctx,"inherit") and ctx.inherit != "attr":
                 self.jasminParser.callCondition(ctx.logicOp().getText(),ctx.inherit,typeIf)
-            ctx.type = "bool"
+            else:
+                self.jasminParser.executeBoolExpression(ctx.logicOp().getText(),typeIf)
+            ctx.type = 'bool'
+
 
 
     # Enter a parse tree produced by LanguageParser#notExp.
@@ -419,7 +454,7 @@ class LanguageListener(ParseTreeListener):
 
     # Exit a parse tree produced by LanguageParser#notExp.
     def exitNotExp(self, ctx:LanguageParser.NotExpContext):
-        pass
+        self.jasminParser.xor()
 
     # Enter a parse tree produced by LanguageParser#elemAritmetic.
     def enterElemAritmetic(self, ctx:LanguageParser.ElemAritmeticContext):
@@ -428,14 +463,16 @@ class LanguageListener(ParseTreeListener):
     # Exit a parse tree produced by LanguageParser#elemAritmetic.
     def exitElemAritmetic(self, ctx:LanguageParser.ElemAritmeticContext):
         if ctx.ID() is not None:
-            var = None
-            try:
-                var = self.symbolTable[ctx.ID().getText()]
-            except:
-                raise Exception(f'identificador não declarado: {ctx.ID().getText()}')
+            var = self.getFromSymbolTable(ctx.ID().getText())
+            
             if var[1] not in ["float","int"]:
-                raise Exception(f'operação inválida para variável \"{ctx.ID().getText()}\" de tipo: {var[1]}')
-            self.jasminParser.loadVar(var[0], var[1])
+                    raise Exception(f'line {ctx.start.line}: Operação inválida para variável \"{ctx.ID().getText()}\" de tipo: {var[1]}')
+            
+            if var[0] is None: # constante
+                self.jasminParser.loadConst(var[2], var[1])
+            else: #variavel
+                self.jasminParser.loadVar(var[0], var[1])
+
             ctx.type = var[1]
         elif ctx.FLOAT() is not None:
             self.jasminParser.loadConst(ctx.FLOAT().getText(), "float")
@@ -451,12 +488,13 @@ class LanguageListener(ParseTreeListener):
     # Exit a parse tree produced by LanguageParser#elemLogic.
     def exitElemLogic(self, ctx:LanguageParser.ElemLogicContext):
         if ctx.ID() is not None:
-            var = None
-            try:
-                var = self.symbolTable[ctx.ID().getText()]
-            except:
-                raise Exception("identificador não declararo!!")
-            self.jasminParser.loadVar(var[0], var[1])
+            var = self.getFromSymbolTable(ctx.ID().getText())
+
+            if var[0] is None: # constante
+                self.jasminParser.loadConst(var[2], var[1])
+            else: #variavel
+                self.jasminParser.loadVar(var[0], var[1])
+           
             ctx.type = var[1]
         else:
             ctx.type = ctx.getChild(0).type
@@ -477,10 +515,15 @@ class LanguageListener(ParseTreeListener):
         elif type == "str":
             return ""
         elif type == "bool":
-            return 0
+            return "false"
         elif type == "float":
             return 0.0
 
+    def getFromSymbolTable(self, id):
+        try:
+            return self.symbolTable[id]
+        except:
+            raise Exception(f'Identificador não declarado: {id}')
 
 
 
